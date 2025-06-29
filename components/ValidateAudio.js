@@ -1,6 +1,6 @@
 import { Modal, Pressable, StyleSheet, Text, TextInput, View } from 'react-native';
 
-export default function SaveRecordingModal({ visible, recordingName, onChangeRecordingName, onSave, onCancel }) {
+export default function ValidateAudio({ visible, recordingName, onChangeRecordingName, onSave, onCancel }) {
     return (
         <Modal
             visible={visible}

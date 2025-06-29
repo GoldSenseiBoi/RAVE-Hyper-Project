@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import { ActivityIndicator, StyleSheet, Text, View } from 'react-native';
 import { useSelector } from 'react-redux';
 
-export default function ModelSelector({ selectedModel, setSelectedModel, onModelsLoaded }) {
+export default function AIModelChooser({ selectedModel, setSelectedModel, onModelsLoaded }) {
     const [availableModels, setAvailableModels] = useState([]);
     const [loadingModels, setLoadingModels] = useState(false);
     const { connected, ipAddress, port } = useSelector(state => state.server);

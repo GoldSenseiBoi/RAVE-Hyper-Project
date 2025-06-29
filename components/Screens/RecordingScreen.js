@@ -5,7 +5,7 @@ import useAudioRecorder from "../../hooks/useAudioRecorder";
 import useRecordingsStore from "../../hooks/useRecordingsStore";
 import { setRecordingUri } from "../../slice/AudioSlice";
 import RecordingsListUnified from "../RecordingsList";
-import SaveRecordingModal from "../SaveRecordingModal";
+import ValidateAudio from "../ValidateAudio";
 
 export default function RecordingScreen() {
     const { isRecording, startRecording, stopRecording } = useAudioRecorder();
@@ -68,7 +68,7 @@ export default function RecordingScreen() {
                 title="Mes Enregistrements"
             />
 
-            <SaveRecordingModal
+            <ValidateAudio
                 visible={showSaveModal}
                 recordingName={tempRecordingName}
                 onChangeRecordingName={setTempRecordingName}

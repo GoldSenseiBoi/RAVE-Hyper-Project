@@ -5,8 +5,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import useRecordingsStore from "../../hooks/useRecordingsStore";
 import { setIsPlaying, setSelectedModel, setSelectedSound, setTransformedAudio } from '../../slice/AudioSlice';
 import { loadRecordings } from '../../slice/RecordingsSlice';
+import AIModelChooser from '../AIModelChooser';
 import AudioPlayer from '../AudioPlayer';
-import ModelSelector from '../ModelSelector';
 import SoundSourceSelector from '../SoundSourceSelector';
 import UploadButton from '../UploadButton';
 
@@ -65,7 +65,7 @@ export default function transmitRecordingScreen({ navigation }) {
                                 : 'Aucun son sélectionné'}
                         </Text>
 
-                        <ModelSelector 
+                        <AIModelChooser 
                             selectedModel={selectedModel}
                             setSelectedModel={(model) => dispatch(setSelectedModel(model))}
                         />
