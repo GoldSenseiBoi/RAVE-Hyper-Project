@@ -5,7 +5,7 @@ import ImportFromDevice from './sources/ImportFromDevice';
 import SampleSelector from './sources/SampleSelector';
 import StudioPage from './sources/StudioPage';
 
-export default function SoundSourceSelector({ recordings, selectedRecording, onSelectSound }) {
+export default function SelecteurDeSourceSon({ recordings, selectedRecording, onSelectSound }) {
   const [index, setIndex] = useState(0);
   const [routes] = useState([
     { key: 'default', title: 'Sons par d\u00e9faut' },

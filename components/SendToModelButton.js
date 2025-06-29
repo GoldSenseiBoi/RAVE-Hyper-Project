@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { ActivityIndicator, Alert, StyleSheet, Text, TouchableOpacity } from 'react-native';
 import { useSelector } from 'react-redux';
 
-export default function UploadButton({ selectedRecording, selectedModel, onUploadComplete }) {
+export default function SendToModelButton({ selectedRecording, selectedModel, onUploadComplete }) {
     const [uploading, setUploading] = useState(false);
     const { ipAddress, port } = useSelector(state => state.server);
     

@@ -7,8 +7,8 @@ import { setIsPlaying, setSelectedModel, setSelectedSound, setTransformedAudio }
 import { loadRecordings } from '../../slice/RecordingsSlice';
 import AIModelChooser from '../AIModelChooser';
 import AudioPlayer from '../AudioPlayer';
-import SoundSourceSelector from '../SoundSourceSelector';
-import UploadButton from '../UploadButton';
+import SelecteurDeSourceSon from '../SelecteurDeSourceSon';
+import SendToModelButton from '../SendToModelButton';
 
 export default function transmitRecordingScreen({ navigation }) {
     const dispatch = useDispatch();
@@ -50,7 +50,7 @@ export default function transmitRecordingScreen({ navigation }) {
 
             <View style={styles.contentContainer}>
                 <View style={styles.soundSelectorContainer}>
-                    <SoundSourceSelector 
+                    <SelecteurDeSourceSon 
                         recordings={recordings}
                         selectedRecording={selectedSound}
                         onSelectSound={handleSelectSound}
@@ -70,7 +70,7 @@ export default function transmitRecordingScreen({ navigation }) {
                             setSelectedModel={(model) => dispatch(setSelectedModel(model))}
                         />
 
-                        <UploadButton 
+                        <SendToModelButton 
                             selectedRecording={selectedSound}
                             selectedModel={selectedModel}
                             onUploadComplete={handleUploadComplete}
