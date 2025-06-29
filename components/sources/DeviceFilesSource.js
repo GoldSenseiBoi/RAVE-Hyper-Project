@@ -1,44 +1,40 @@
-import React from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, Alert } from 'react-native';
 import * as DocumentPicker from 'expo-document-picker';
 import * as FileSystem from 'expo-file-system';
+import { Alert, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
 export default function DeviceFilesSource({ onSelectSound }) {
+  // Fonction pour sélectionner un fichier audio depuis l'appareil
   const pickDocument = async () => {
     try {
-      // Sélectionner un fichier audio
       const result = await DocumentPicker.getDocumentAsync({
         type: 'audio/*',
         copyToCacheDirectory: true,
       });
-      
-      // Vérifier si l'utilisateur a annulé la sélection
-      if (result.canceled === false) {
+
+      // Vérifier si l'utilisateur a bien sélectionné un fichier
+      if (!result.canceled) {
         const file = result.assets[0];
-        
-        // Préparer le chemin du fichier dans le cache temporaire
+
+        // Générer un nom de fichier propre pour le cache
         const fileName = file.name.replace(/[^a-zA-Z0-9.]/g, '_');
         const deviceSoundUri = `${FileSystem.cacheDirectory}device_sounds/${fileName}`;
-        
-        // Vérifier si le répertoire existe
+
+        // Créer le dossier device_sounds s'il n'existe pas déjà
         const dirInfo = await FileSystem.getInfoAsync(`${FileSystem.cacheDirectory}device_sounds`);
         if (!dirInfo.exists) {
           await FileSystem.makeDirectoryAsync(`${FileSystem.cacheDirectory}device_sounds`, { intermediates: true });
         }
-        
-        // Copier le fichier dans le répertoire des documents
+
+        // Copier le fichier sélectionné dans le cache de l'application
         await FileSystem.copyAsync({
           from: file.uri,
           to: deviceSoundUri
         });
-        
-        // Créer un URI sans le préfixe file://
-        let finalUri = deviceSoundUri;
-        if (finalUri.startsWith('file://')) {
-          finalUri = finalUri.substring(7);
-        }
-        
-        // Créer un objet compatible avec le format attendu par UploadButton
+
+        // Nettoyer l'URI en supprimant le préfixe "file://"
+        let finalUri = deviceSoundUri.startsWith('file://') ? deviceSoundUri.substring(7) : deviceSoundUri;
+
+        // Créer un objet de son compatible avec les autres composants
         onSelectSound({
           id: 'device-' + Date.now(),
           name: file.name,
@@ -50,7 +46,6 @@ export default function DeviceFilesSource({ onSelectSound }) {
       Alert.alert('Erreur', 'Impossible de sélectionner le fichier audio');
     }
   };
-  
 
   return (
     <View style={styles.container}>
@@ -66,27 +61,29 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 10,
+    backgroundColor: '#121212',
   },
   title: {
     fontSize: 16,
     fontWeight: 'bold',
     marginBottom: 10,
+    color: '#ffffff',
   },
   pickButton: {
-    backgroundColor: '#3498db',
+    backgroundColor: '#3b82f6',
     padding: 15,
     borderRadius: 8,
     alignItems: 'center',
     marginBottom: 20,
   },
   pickButtonText: {
-    color: '#fff',
+    color: '#ffffff',
     fontSize: 16,
     fontWeight: 'bold',
   },
   selectedFileContainer: {
     padding: 15,
-    backgroundColor: '#e8f4fd',
+    backgroundColor: '#1e1e1e',
     borderRadius: 8,
     flexDirection: 'row',
     alignItems: 'center',
@@ -96,20 +93,22 @@ const styles = StyleSheet.create({
   },
   selectedFileName: {
     fontSize: 16,
+    color: '#ffffff',
   },
   playButton: {
     width: 40,
     height: 40,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#f0f0f0',
+    backgroundColor: '#2a2a2a',
     borderRadius: 20,
     marginLeft: 10,
   },
   playingButton: {
-    backgroundColor: '#3498db',
+    backgroundColor: '#3b82f6',
   },
   playButtonText: {
     fontSize: 18,
+    color: '#ffffff',
   },
 });

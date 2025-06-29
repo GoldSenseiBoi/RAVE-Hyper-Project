@@ -1,5 +1,4 @@
-import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { StyleSheet, Text, View } from 'react-native';
 import RecordingsListUnified from '../RecordingsList';
 
 export default function RecordingsSource({ recordings, selectedId, onSelectRecording }) {
@@ -28,18 +27,20 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 10,
+    backgroundColor: '#121212', // Fond sombre
   },
   title: {
     fontSize: 16,
     fontWeight: 'bold',
     marginBottom: 10,
+    color: '#ffffff', // Texte clair
   },
   recordingsContainer: {
     flex: 1,
   },
   emptyContainer: {
     padding: 20,
-    backgroundColor: '#fff',
+    backgroundColor: '#1e1e1e', // Conteneur sombre
     borderRadius: 8,
     alignItems: 'center',
     justifyContent: 'center',
@@ -47,7 +48,7 @@ const styles = StyleSheet.create({
   },
   emptyText: {
     fontSize: 16,
-    color: '#999',
+    color: '#888', // Texte gris clair
     fontStyle: 'italic',
   },
 });
