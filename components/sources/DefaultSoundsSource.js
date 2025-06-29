@@ -1,11 +1,11 @@
-import React, { useState, useEffect } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, Alert, FlatList } from 'react-native';
-import * as FileSystem from 'expo-file-system';
 import { Asset } from 'expo-asset';
+import * as FileSystem from 'expo-file-system';
+import { useEffect, useState } from 'react';
+import { Alert, FlatList, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
 export default function DefaultSoundsSource({ onSelectSound, selectedRecording }) {
   const [selectedSoundId, setSelectedSoundId] = useState(null);
-  
+
   const defaultSounds = [
     { id: 'default1', name: 'Bell', assetModule: require('../../assets/audio/bell.wav') },
     { id: 'default2', name: 'Clap', assetModule: require('../../assets/audio/clap.wav') },
@@ -18,7 +18,7 @@ export default function DefaultSoundsSource({ onSelectSound, selectedRecording }
     { id: 'default9', name: 'Snare', assetModule: require('../../assets/audio/snare.wav') },
   ];
 
-  // Mettre à jour selectedSoundId lorsque selectedRecording change
+  // 🔄 Synchronise la selection depuis l'extérieur
   useEffect(() => {
     if (selectedRecording && selectedRecording.id.startsWith('default-')) {
       const soundName = selectedRecording.id.split('default-')[1];
@@ -33,41 +33,25 @@ export default function DefaultSoundsSource({ onSelectSound, selectedRecording }
     }
   }, [selectedRecording]);
 
-  // Fonction pour sélectionner un son en le mettant dans le cache
+  // 🎵 Copie un asset local dans le cache et crée l'objet son utilisable
   const copyAssetToFileSystem = async (assetModule, name, id) => {
     try {
-      // Mettre à jour l'état de sélection immédiatement pour un retour visuel
       setSelectedSoundId(id);
-      
-      // Préparer le chemin du fichier dans le répertoire des documents
       const soundUri = `${FileSystem.cacheDirectory}sounds/${name.toLowerCase()}.wav`;
-      
-      // Vérifier si le répertoire existe
+
       const dirInfo = await FileSystem.getInfoAsync(`${FileSystem.cacheDirectory}sounds`);
       if (!dirInfo.exists) {
         await FileSystem.makeDirectoryAsync(`${FileSystem.cacheDirectory}sounds`, { intermediates: true });
       }
-      
-      // Vérifier si le fichier existe déjà
+
       const fileInfo = await FileSystem.getInfoAsync(soundUri);
       if (!fileInfo.exists) {
-        // Charger l'asset
         const asset = await Asset.loadAsync(assetModule);
         const assetUri = asset[0].localUri;
-        
-        // Copier le fichier
-        await FileSystem.copyAsync({
-          from: assetUri,
-          to: soundUri
-        });
+        await FileSystem.copyAsync({ from: assetUri, to: soundUri });
       }
 
-      // Créer un objet compatible avec le format attendu par UploadButton
-      let finalUri = soundUri;
-      if (finalUri.startsWith('file://')) {
-        finalUri = finalUri.substring(7); // Enlever le préfixe 'file://'
-      }
-      
+      let finalUri = soundUri.startsWith('file://') ? soundUri.substring(7) : soundUri;
       const soundObj = {
         id: `default-${name.toLowerCase()}`,
         name: name,
@@ -76,20 +60,15 @@ export default function DefaultSoundsSource({ onSelectSound, selectedRecording }
 
       onSelectSound(soundObj);
     } catch (error) {
-      console.error(`Erreur lors de la préparation du son ${name}:`, error);
-      Alert.alert('Erreur', `Impossible de préparer le son ${name}`);
+      console.error(`Erreur ${name} :`, error);
+      Alert.alert('Erreur', `Impossible de charger ${name}`);
     }
   };
 
-  // Vérifier si un son est sélectionné
-  const isSelected = (id) => {
-    return id === selectedSoundId;
-  };
+  const isSelected = (id) => id === selectedSoundId;
 
-  // Rendu d'un élément individuel pour la FlatList
   const renderSoundItem = ({ item }) => {
     const selected = isSelected(item.id);
-    
     return (
       <View style={styles.soundItemContainer}>
         <TouchableOpacity
@@ -127,6 +106,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: 'bold',
     marginBottom: 10,
+    color: '#eee'
   },
   soundItemsContainer: {
     flex: 1,
@@ -142,20 +122,21 @@ const styles = StyleSheet.create({
   soundItem: {
     flex: 1,
     padding: 15,
-    backgroundColor: '#f0f0f0',
+    backgroundColor: '#2a2a2a',
     borderRadius: 8,
     marginRight: 8,
   },
   selectedSoundItem: {
-    backgroundColor: '#e6f0ff',
-    borderColor: '#3498db',
+    backgroundColor: '#1e1e2f',
+    borderColor: '#4FC3F7',
     borderWidth: 1,
   },
   soundName: {
     fontSize: 16,
+    color: '#ccc',
   },
   selectedSoundText: {
-    color: '#3498db',
+    color: '#4FC3F7',
     fontWeight: 'bold',
   },
   playButton: {
@@ -163,7 +144,7 @@ const styles = StyleSheet.create({
     height: 40,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#f0f0f0',
+    backgroundColor: '#2a2a2a',
     borderRadius: 20,
   },
   playingButton: {
