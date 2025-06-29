@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
-import { TouchableOpacity, Text, StyleSheet, ActivityIndicator, Alert } from 'react-native';
 import * as FileSystem from 'expo-file-system';
+import { useState } from 'react';
+import { ActivityIndicator, Alert, StyleSheet, Text, TouchableOpacity } from 'react-native';
 import { useSelector } from 'react-redux';
 
 export default function UploadButton({ selectedRecording, selectedModel, onUploadComplete }) {
@@ -175,20 +175,21 @@ export default function UploadButton({ selectedRecording, selectedModel, onUploa
 };
 
 const styles = StyleSheet.create({
-    button: {
-        backgroundColor: '#4444ff',
-        borderRadius: 8,
-        padding: 16,
-        alignItems: 'center',
-        justifyContent: 'center',
-    },
-    buttonText: {
-        color: '#fff',
-        fontSize: 16,
-        fontWeight: 'bold',
-    },
-    disabledButton: {
-        backgroundColor: '#aaaaff',
-        opacity: 0.7,
-    },
+  button: {
+    backgroundColor: '#4444ff',          // Bouton actif bleu électrique
+    borderRadius: 8,
+    padding: 16,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  buttonText: {
+    color: '#fff',                        // Texte blanc sur bouton foncé
+    fontSize: 16,
+    fontWeight: 'bold',
+  },
+  disabledButton: {
+    backgroundColor: '#333',             // Bouton désactivé : gris foncé
+    opacity: 0.5,                         // Semi-transparent pour effet visuel
+  },
 });
+

@@ -1,29 +1,24 @@
-import React from 'react';
-import { View, Text, StyleSheet, Pressable } from 'react-native';
-import { useSelector } from 'react-redux';
 import { Ionicons } from '@expo/vector-icons';
+import { Pressable, StyleSheet, Text, View } from 'react-native';
+import { useSelector } from 'react-redux';
 import useAudioControl from '../hooks/useAudioControl';
 
 export default function AudioPlayer({ uri, title, onPlay }) {
     const { playAudio, pauseAudio } = useAudioControl();
     const { isPlaying, currentlyPlayingUri } = useSelector(state => state.audio);
-    
-    // Déterminer si ce lecteur est en cours de lecture
+
+    // 🎧 Détermine si ce lecteur est actif (lecture en cours)
     const playing = isPlaying && currentlyPlayingUri === uri;
 
+    // ▶️/⏸️ Lance ou met en pause la lecture du son
     const handlePlayPause = () => {
         if (playing) {
             pauseAudio();
         } else {
             playAudio(uri);
         }
-        
-        // Appeler le callback onPlay si fourni
-        if (onPlay) {
-            onPlay();
-        }
+        if (onPlay) onPlay();
     };
-    
 
     return (
         <View style={styles.audioSection}>
@@ -36,7 +31,7 @@ export default function AudioPlayer({ uri, title, onPlay }) {
                     <Ionicons 
                         name={playing ? "pause" : "play"} 
                         size={24} 
-                        color={playing ? "#ffffff" : "#4444ff"}
+                        color={playing ? "#fff" : "#bbb"}
                     />
                 </Pressable>
             </View>
@@ -48,7 +43,7 @@ const styles = StyleSheet.create({
     audioSection: {
         marginTop: 16,
         padding: 16,
-        backgroundColor: '#f0f8ff',
+        backgroundColor: '#1e1e1e',
         borderRadius: 8,
         borderWidth: 1,
         borderColor: '#4444ff',
@@ -62,6 +57,7 @@ const styles = StyleSheet.create({
         fontSize: 18,
         fontWeight: 'bold',
         flex: 1,
+        color: '#eee',
     },
     controlButton: {
         width: 40,
@@ -69,7 +65,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         borderRadius: 20,
-        backgroundColor: '#eee',
+        backgroundColor: '#333',
     },
     playingButton: {
         backgroundColor: '#4444ff',
@@ -101,6 +97,6 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         marginTop: 8,
         fontSize: 14,
-        color: '#666',
+        color: '#bbb',
     },
 });

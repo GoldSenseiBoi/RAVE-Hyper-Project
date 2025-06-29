@@ -1,20 +1,18 @@
-import React, { useState } from 'react';
-import { StyleSheet } from 'react-native';
-import { TabView, SceneMap, TabBar } from 'react-native-tab-view';
-import { Dimensions } from 'react-native';
+import { useState } from 'react';
+import { Dimensions, StyleSheet } from 'react-native';
+import { SceneMap, TabBar, TabView } from 'react-native-tab-view';
 import DefaultSoundsSource from './sources/DefaultSoundsSource';
-import RecordingsSource from './sources/RecordingsSource';
 import DeviceFilesSource from './sources/DeviceFilesSource';
+import RecordingsSource from './sources/RecordingsSource';
 
 export default function SoundSourceSelector({ recordings, selectedRecording, onSelectSound }) {
   const [index, setIndex] = useState(0);
   const [routes] = useState([
-    { key: 'default', title: 'Sons par défaut' },
+    { key: 'default', title: 'Sons par d\u00e9faut' },
     { key: 'recordings', title: 'Enregistrements' },
     { key: 'device', title: 'Appareil' },
   ]);
 
-  // Fonction pour afficher le bon composant en fonction de la route
   const renderScene = SceneMap({
     default: () => <DefaultSoundsSource onSelectSound={onSelectSound} selectedRecording={selectedRecording} />,
     recordings: () => <RecordingsSource 
@@ -28,15 +26,14 @@ export default function SoundSourceSelector({ recordings, selectedRecording, onS
     device: () => <DeviceFilesSource onSelectSound={onSelectSound} />,
   });
 
-  // Fonction pour afficher la barre de tabulation
   const renderTabBar = props => (
     <TabBar
       {...props}
       indicatorStyle={styles.indicator}
       style={styles.tabBar}
       labelStyle={styles.tabLabel}
-      activeColor="#3498db"
-      inactiveColor="#95a5a6"
+      activeColor="#4FC3F7"
+      inactiveColor="#aaa"
     />
   );
 
@@ -55,20 +52,22 @@ export default function SoundSourceSelector({ recordings, selectedRecording, onS
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: '#121212',
   },
   tabBar: {
-    backgroundColor: '#fff',
+    backgroundColor: '#1e1e1e',
     elevation: 0,
     shadowOpacity: 0,
     borderBottomWidth: 1,
-    borderBottomColor: '#e0e0e0',
+    borderBottomColor: '#333',
   },
   indicator: {
-    backgroundColor: '#3498db',
+    backgroundColor: '#4FC3F7',
     height: 3,
   },
   tabLabel: {
     fontWeight: '500',
     textTransform: 'none',
-  }
+    color: '#eee',
+  },
 });

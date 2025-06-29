@@ -1,46 +1,39 @@
-import { View, Text, StyleSheet, Pressable } from "react-native";
 import { useState } from "react";
-import { SafeAreaView } from "react-native";
+import { Pressable, SafeAreaView, StyleSheet, Text, View } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
-import RecordingsListUnified from "../RecordingsList";
-import SaveRecordingModal from "../SaveRecordingModal";
 import useAudioRecorder from "../../hooks/useAudioRecorder";
 import useRecordingsStore from "../../hooks/useRecordingsStore";
 import { setRecordingUri } from "../../slice/AudioSlice";
+import RecordingsListUnified from "../RecordingsList";
+import SaveRecordingModal from "../SaveRecordingModal";
 
 export default function RecordingScreen() {
-    // Utilisation des hooks personnalisés
     const { isRecording, startRecording, stopRecording } = useAudioRecorder();
     const { recordings, saveRecording, removeRecording } = useRecordingsStore();
     const dispatch = useDispatch();
     const { recordingUri } = useSelector(state => state.audio);
-    
-    // États locaux pour la modal de sauvegarde
+
+    // 🌊 Contrôle de la modal de sauvegarde temporaire
     const [showSaveModal, setShowSaveModal] = useState(false);
     const [tempRecordingName, setTempRecordingName] = useState("");
-    
-    // Fonction pour gérer l'arrêt de l'enregistrement
+
+    // ⏹️ Gère l'arrêt et propose la sauvegarde
     const handleStopRecording = async () => {
         const uri = await stopRecording();
-        
-        // Afficher directement la modal de sauvegarde
         setTempRecordingName(`Enregistrement ${recordings.length + 1}`);
         setShowSaveModal(true);
     };
-    
-    // Fonction pour sauvegarder l'enregistrement
+
+    // 🔖 Sauvegarde l'enregistrement avec nom personnalisé
     const handleSaveRecording = () => {
         if (!recordingUri) return;
-        
         saveRecording(recordingUri, tempRecordingName);
         setShowSaveModal(false);
-        
-        // Réinitialiser les valeurs temporaires
         setTempRecordingName("");
         dispatch(setRecordingUri(null));
     };
-    
-    // Fonction pour annuler la sauvegarde
+
+    // ❌ Annule la sauvegarde temporaire
     const handleCancelSave = () => {
         setShowSaveModal(false);
         setTempRecordingName("");
@@ -67,14 +60,14 @@ export default function RecordingScreen() {
                      "Prêt à enregistrer"}
                 </Text>
             </View>
-            
+
             <RecordingsListUnified 
                 recordings={recordings}
                 onDeleteRecording={removeRecording}
                 selectable={false}
                 title="Mes Enregistrements"
             />
-            
+
             <SaveRecordingModal
                 visible={showSaveModal}
                 recordingName={tempRecordingName}
@@ -90,21 +83,22 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         padding: 16,
-        backgroundColor: '#f5f5f5',
+        backgroundColor: '#121212',
     },
     title: {
         fontSize: 20,
         fontWeight: 'bold',
         marginBottom: 16,
         textAlign: 'center',
+        color: '#eee',
     },
     recorderSection: {
-        backgroundColor: '#fff',
+        backgroundColor: '#1e1e1e',
         borderRadius: 8,
         padding: 16,
         marginBottom: 16,
         elevation: 2,
-        shadowColor: '#000',
+        shadowColor: '#222',
         shadowOffset: { width: 0, height: 2 },
         shadowOpacity: 0.1,
         shadowRadius: 4,
@@ -166,6 +160,6 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         fontSize: 16,
         marginTop: 8,
+        color: '#ccc'
     },
-
 });

@@ -1,17 +1,16 @@
-import React from 'react';
-import { View, Text, StyleSheet, Pressable } from 'react-native';
-import { useSelector } from 'react-redux';
 import { Ionicons } from '@expo/vector-icons';
+import { Pressable, StyleSheet, Text, View } from 'react-native';
+import { useSelector } from 'react-redux';
 import useAudioControl from '../hooks/useAudioControl';
 
 export default function RecordingItem({ recording, onDelete, selectable = false, isSelected = false, onSelect = null }) {
   const { playAudio, pauseAudio } = useAudioControl();
   const { isPlaying, currentlyPlayingUri } = useSelector(state => state.audio);
 
-  // Déterminer si ce lecteur est en cours de lecture
+  // 🎧 Vérifie si ce fichier est en cours de lecture
   const playing = isPlaying && currentlyPlayingUri === recording.uri;
-  
-  // Fonction pour gérer la lecture/pause
+
+  // ▶️/⏸️ Lance ou interrompt la lecture
   const handlePlayPause = () => {
     if (playing) {
       pauseAudio();
@@ -19,8 +18,8 @@ export default function RecordingItem({ recording, onDelete, selectable = false,
       playAudio(recording.uri);
     }
   };
-  
-  // Gestion du clic sur l'élément entier (pour la sélection)
+
+  // 🔢 Gère la sélection d'élément si activée
   const handleItemPress = () => {
     if (selectable && onSelect) {
       onSelect(recording.id);
@@ -29,10 +28,7 @@ export default function RecordingItem({ recording, onDelete, selectable = false,
 
   return (
     <Pressable 
-      style={[
-        styles.recordingItem, 
-        selectable && isSelected && styles.selectedItem
-      ]}
+      style={[styles.recordingItem, selectable && isSelected && styles.selectedItem]}
       onPress={handleItemPress}
     >
       <View style={styles.recordingInfo}>
@@ -41,16 +37,14 @@ export default function RecordingItem({ recording, onDelete, selectable = false,
           <Text style={styles.recordingDate}>{recording.date}</Text>
         </View>
       </View>
-      
+
       <View style={styles.controlsContainer}>
-        {/* Indicateur de sélection (affiché uniquement si selectable=true) */}
         {selectable && (
           <View style={styles.selectionIndicator}>
             <Text style={styles.selectionText}>{isSelected ? '✓' : '○'}</Text>
           </View>
         )}
-        
-        {/* Boutons de contrôle (affichés uniquement si selectable=false) */}
+
         {!selectable && (
           <View style={styles.recordingControls}>
             <Pressable 
@@ -58,12 +52,12 @@ export default function RecordingItem({ recording, onDelete, selectable = false,
               onPress={handlePlayPause}
             >
               <Ionicons 
-                name={playing ? "pause" : "play"}
+                name={playing ? "pause" : "play"} 
                 size={20} 
-                color={playing ? '#ffffff' : '#4444ff'}
+                color={playing ? '#fff' : '#bbb'}
               />
             </Pressable>
-            
+
             {onDelete && (
               <Pressable 
                 style={[styles.controlButton, styles.deleteButton]}
@@ -81,7 +75,7 @@ export default function RecordingItem({ recording, onDelete, selectable = false,
 
 const styles = StyleSheet.create({
   recordingItem: {
-    backgroundColor: '#f9f9f9',
+    backgroundColor: '#1e1e1e',
     borderRadius: 8,
     padding: 12,
     marginBottom: 8,
@@ -90,7 +84,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   selectedItem: {
-    backgroundColor: '#e6f0ff',
+    backgroundColor: '#2c2c3c',
     borderColor: '#4444ff',
     borderWidth: 1,
   },
@@ -104,10 +98,11 @@ const styles = StyleSheet.create({
   recordingName: {
     fontSize: 16,
     fontWeight: 'bold',
+    color: '#eee',
   },
   recordingDate: {
     fontSize: 12,
-    color: '#666',
+    color: '#aaa',
     marginTop: 4,
   },
   controlsContainer: {
@@ -124,11 +119,11 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     borderRadius: 20,
-    backgroundColor: '#eee',
+    backgroundColor: '#333',
     marginLeft: 8,
   },
   deleteButton: {
-    backgroundColor: '#ffeeee',
+    backgroundColor: '#3c1e1e',
   },
   playingButton: {
     backgroundColor: '#4444ff',
@@ -139,12 +134,12 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     borderRadius: 15,
-    backgroundColor: '#f0f0f0',
+    backgroundColor: '#2a2a2a',
     borderWidth: 1,
-    borderColor: '#ccc',
+    borderColor: '#666',
   },
   selectionText: {
     fontSize: 16,
-    color: '#4444ff',
+    color: '#bbb',
   },
 });

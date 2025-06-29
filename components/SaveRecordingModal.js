@@ -1,5 +1,4 @@
-import React from 'react';
-import { View, Text, StyleSheet, Pressable, TextInput, Modal } from 'react-native';
+import { Modal, Pressable, StyleSheet, Text, TextInput, View } from 'react-native';
 
 export default function SaveRecordingModal({ visible, recordingName, onChangeRecordingName, onSave, onCancel }) {
     return (
@@ -9,12 +8,14 @@ export default function SaveRecordingModal({ visible, recordingName, onChangeRec
             animationType="fade"
             onRequestClose={onCancel}
         >
+            
             <View style={styles.modalOverlay}>
                 <View style={styles.modalContent}>
                     <Text style={styles.modalTitle}>Sauvegarder l'enregistrement</Text>
                     <TextInput
                         style={styles.input}
                         placeholder="Nom de l'enregistrement"
+                        placeholderTextColor="#aaa"
                         value={recordingName}
                         onChangeText={onChangeRecordingName}
                     />
@@ -23,13 +24,13 @@ export default function SaveRecordingModal({ visible, recordingName, onChangeRec
                             style={[styles.modalButton, styles.cancelButton]}
                             onPress={onCancel}
                         >
-                            <Text style={styles.modalButtonText}>Annuler</Text>
+                            <Text style={styles.cancelText}>Annuler</Text>
                         </Pressable>
                         <Pressable
                             style={[styles.modalButton, styles.confirmButton]}
                             onPress={onSave}
                         >
-                            <Text style={styles.modalButtonText}>Sauvegarder</Text>
+                            <Text style={styles.confirmText}>Sauvegarder</Text>
                         </Pressable>
                     </View>
                 </View>
@@ -46,7 +47,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     modalContent: {
-        backgroundColor: 'white',
+        backgroundColor: '#1e1e1e',
         borderRadius: 8,
         padding: 20,
         width: '80%',
@@ -57,13 +58,16 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         marginBottom: 16,
         textAlign: 'center',
+        color: '#eee',
     },
     input: {
         borderWidth: 1,
-        borderColor: '#ddd',
+        borderColor: '#555',
         borderRadius: 4,
         padding: 10,
         marginBottom: 16,
+        color: '#fff',
+        backgroundColor: '#2a2a2a',
     },
     modalButtons: {
         flexDirection: 'row',
@@ -77,12 +81,16 @@ const styles = StyleSheet.create({
         marginHorizontal: 5,
     },
     cancelButton: {
-        backgroundColor: '#dddddd',
+        backgroundColor: '#333',
     },
     confirmButton: {
         backgroundColor: '#44aa44',
     },
-    modalButtonText: {
+    cancelText: {
+        fontWeight: 'bold',
+        color: '#ccc',
+    },
+    confirmText: {
         fontWeight: 'bold',
         color: '#fff',
     }

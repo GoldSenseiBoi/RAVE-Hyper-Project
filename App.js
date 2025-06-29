@@ -1,9 +1,9 @@
-import React from 'react';
-import { StyleSheet, View, Text } from 'react-native';
-import { Provider, useSelector } from 'react-redux';
-import { NavigationContainer } from '@react-navigation/native';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Ionicons } from '@expo/vector-icons';
+
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { DarkTheme, NavigationContainer } from '@react-navigation/native';
+import { StyleSheet, View } from 'react-native';
+import { Provider, useSelector } from 'react-redux';
 import HomeScreen from './components/Screen/HomeScreen';
 import RecordingScreen from './components/Screen/RecordingScreen';
 import UploadRecordingScreen from './components/Screen/UploadRecordingScreen';
@@ -11,10 +11,9 @@ import store from './store/store';
 
 const Tab = createBottomTabNavigator();
 
-// Composant principal qui affiche le contenu
 function MainContent() {
   const { connected } = useSelector(state => state.server);
-  
+
   if (!connected) {
     return (
       <View style={styles.container}>
@@ -22,9 +21,9 @@ function MainContent() {
       </View>
     );
   }
-  
+
   return (
-    <NavigationContainer>
+    <NavigationContainer theme={DarkTheme}>
       <Tab.Navigator
         screenOptions={({ route }) => ({
           tabBarIcon: ({ focused, color, size }) => {
@@ -36,23 +35,22 @@ function MainContent() {
             }
             return <Ionicons name={iconName} size={size} color={color} />;
           },
-          tabBarActiveTintColor: '#4444ff',
-          tabBarInactiveTintColor: 'gray',
+          tabBarActiveTintColor: '#4FC3F7',
+          tabBarInactiveTintColor: '#aaa',
+          tabBarStyle: {
+            backgroundColor: '#1e1e1e',
+            borderTopColor: '#333'
+          },
           headerShown: false
         })}
       >
-        <Tab.Screen name="Studio">
-          {(props) => <RecordingScreen {...props} />}
-        </Tab.Screen>
-        <Tab.Screen name="Convertisseur">
-          {(props) => <UploadRecordingScreen {...props} />}
-        </Tab.Screen>
+        <Tab.Screen name="Studio" component={RecordingScreen} />
+        <Tab.Screen name="Convertisseur" component={UploadRecordingScreen} />
       </Tab.Navigator>
     </NavigationContainer>
   );
 }
 
-// Composant principal qui fournit le Provider Redux
 export default function App() {
   return (
     <Provider store={store}>
@@ -64,6 +62,6 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
-  }
+    backgroundColor: '#121212',
+  },
 });
