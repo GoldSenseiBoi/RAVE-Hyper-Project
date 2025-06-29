@@ -8,13 +8,7 @@
 
 ---
 
-## 👉 Accès Immédiat via Expo Go
 
-Scannez ce QR code avec l'app **Expo Go** pour lancer l'application :
-
-![QR Code Expo](url)
-
----
 
 ## 📊 Fonctionnalités Clés
 
