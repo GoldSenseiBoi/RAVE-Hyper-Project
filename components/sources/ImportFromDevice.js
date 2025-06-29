@@ -2,7 +2,7 @@ import * as DocumentPicker from 'expo-document-picker';
 import * as FileSystem from 'expo-file-system';
 import { Alert, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
-export default function DeviceFilesSource({ onSelectSound }) {
+export default function ImportFromDevice({ onSelectSound }) {
   // Fonction pour sélectionner un fichier audio depuis l'appareil
   const pickDocument = async () => {
     try {

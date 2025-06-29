@@ -1,9 +1,9 @@
 import { useState } from 'react';
 import { Dimensions, StyleSheet } from 'react-native';
 import { SceneMap, TabBar, TabView } from 'react-native-tab-view';
-import DefaultSoundsSource from './sources/DefaultSoundsSource';
-import DeviceFilesSource from './sources/DeviceFilesSource';
-import RecordingsSource from './sources/RecordingsSource';
+import ImportFromDevice from './sources/ImportFromDevice';
+import SampleSelector from './sources/SampleSelector';
+import StudioPage from './sources/StudioPage';
 
 export default function SoundSourceSelector({ recordings, selectedRecording, onSelectSound }) {
   const [index, setIndex] = useState(0);
@@ -14,8 +14,8 @@ export default function SoundSourceSelector({ recordings, selectedRecording, onS
   ]);
 
   const renderScene = SceneMap({
-    default: () => <DefaultSoundsSource onSelectSound={onSelectSound} selectedRecording={selectedRecording} />,
-    recordings: () => <RecordingsSource 
+    default: () => <SampleSelector onSelectSound={onSelectSound} selectedRecording={selectedRecording} />,
+    recordings: () => <StudioPage 
                         recordings={recordings} 
                         selectedId={selectedRecording ? selectedRecording.id : null}
                         onSelectRecording={(id) => {
@@ -23,7 +23,7 @@ export default function SoundSourceSelector({ recordings, selectedRecording, onS
                           onSelectSound(recording);
                         }}
                       />,
-    device: () => <DeviceFilesSource onSelectSound={onSelectSound} />,
+    device: () => <ImportFromDevice onSelectSound={onSelectSound} />,
   });
 
   const renderTabBar = props => (

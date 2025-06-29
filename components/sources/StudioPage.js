@@ -1,7 +1,7 @@
 import { StyleSheet, Text, View } from 'react-native';
 import RecordingsListUnified from '../RecordingsList';
 
-export default function RecordingsSource({ recordings, selectedId, onSelectRecording }) {
+export default function StudioPage({ recordings, selectedId, onSelectRecording }) {
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Enregistrements</Text>

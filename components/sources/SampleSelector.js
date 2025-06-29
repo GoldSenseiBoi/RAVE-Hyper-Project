@@ -3,7 +3,7 @@ import * as FileSystem from 'expo-file-system';
 import { useEffect, useState } from 'react';
 import { Alert, FlatList, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
-export default function DefaultSoundsSource({ onSelectSound, selectedRecording }) {
+export default function SampleSelector({ onSelectSound, selectedRecording }) {
   const [selectedSoundId, setSelectedSoundId] = useState(null);
 
   const defaultSounds = [
