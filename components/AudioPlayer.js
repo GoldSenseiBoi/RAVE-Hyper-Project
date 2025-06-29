@@ -11,7 +11,7 @@ export default function AudioPlayer({ uri, title, onPlay }) {
     const playing = isPlaying && currentlyPlayingUri === uri;
 
     // ▶️/⏸️ Lance ou met en pause la lecture du son
-    const handlePlayPause = () => {
+    const togglePlayback = () => {
         if (playing) {
             pauseAudio();
         } else {
@@ -26,7 +26,7 @@ export default function AudioPlayer({ uri, title, onPlay }) {
                 <Text style={styles.sectionTitle}>{title}</Text>
                 <Pressable 
                     style={[styles.controlButton, playing && styles.playingButton]}
-                    onPress={handlePlayPause}
+                    onPress={togglePlayback}
                 >
                     <Ionicons 
                         name={playing ? "pause" : "play"} 

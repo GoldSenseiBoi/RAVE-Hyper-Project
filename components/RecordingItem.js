@@ -11,7 +11,7 @@ export default function RecordingItem({ recording, onDelete, selectable = false,
   const playing = isPlaying && currentlyPlayingUri === recording.uri;
 
   // ▶️/⏸️ Lance ou interrompt la lecture
-  const handlePlayPause = () => {
+  const togglePlayback = () => {
     if (playing) {
       pauseAudio();
     } else {
@@ -49,7 +49,7 @@ export default function RecordingItem({ recording, onDelete, selectable = false,
           <View style={styles.recordingControls}>
             <Pressable 
               style={[styles.controlButton, playing && styles.playingButton]}
-              onPress={handlePlayPause}
+              onPress={togglePlayback}
             >
               <Ionicons 
                 name={playing ? "pause" : "play"} 

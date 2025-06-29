@@ -69,7 +69,7 @@ export default function UploadButton({ selectedRecording, selectedModel, onUploa
     };
     
     // Fonction pour uploader l'enregistrement
-    const uploadRecording = async () => {
+    const transmitRecording = async () => {
         if (!selectedRecording) {
             Alert.alert('Erreur', 'Veuillez sélectionner un enregistrement');
             return;
@@ -152,7 +152,7 @@ export default function UploadButton({ selectedRecording, selectedModel, onUploa
             return;
         }
         
-        uploadRecording();
+        transmitRecording();
     };
     
     const disabled = !selectedRecording || !selectedModel || uploading;

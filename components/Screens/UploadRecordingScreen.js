@@ -10,7 +10,7 @@ import ModelSelector from '../ModelSelector';
 import SoundSourceSelector from '../SoundSourceSelector';
 import UploadButton from '../UploadButton';
 
-export default function UploadRecordingScreen({ navigation }) {
+export default function transmitRecordingScreen({ navigation }) {
     const dispatch = useDispatch();
     const { recordings } = useRecordingsStore();
 

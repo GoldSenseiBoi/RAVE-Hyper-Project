@@ -34,7 +34,7 @@ export default function DefaultSoundsSource({ onSelectSound, selectedRecording }
   }, [selectedRecording]);
 
   // 🎵 Copie un asset local dans le cache et crée l'objet son utilisable
-  const copyAssetToFileSystem = async (assetModule, name, id) => {
+  const importSoundFromAssets = async (assetModule, name, id) => {
     try {
       setSelectedSoundId(id);
       const soundUri = `${FileSystem.cacheDirectory}sounds/${name.toLowerCase()}.wav`;
@@ -73,7 +73,7 @@ export default function DefaultSoundsSource({ onSelectSound, selectedRecording }
       <View style={styles.soundItemContainer}>
         <TouchableOpacity
           style={[styles.soundItem, selected && styles.selectedSoundItem]}
-          onPress={() => copyAssetToFileSystem(item.assetModule, item.name, item.id)}
+          onPress={() => importSoundFromAssets(item.assetModule, item.name, item.id)}
         >
           <Text style={[styles.soundName, selected && styles.selectedSoundText]}>{item.name}</Text>
         </TouchableOpacity>
